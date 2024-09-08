@@ -1,43 +1,43 @@
 package com.rupicodes.restapi.service;
 
-import com.rupicodes.restapi.dao.EmployeeDAO;
+import com.rupicodes.restapi.dao.EmployeeRepository;
 import com.rupicodes.restapi.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
     public List<Employee> findAllEmployee() {
-        List<Employee> employees = employeeDAO.findAllEmployee();
+        List<Employee> employees = employeeRepository.findAll();
         return employees;
     }
 
     @Override
     public Employee findEmployeeById(int employeeId) {
-        return employeeDAO.findEmployeeById(employeeId);
+        Optional<Employee> dbEmplyee = employeeRepository.findById(employeeId);
+        return dbEmplyee.orElse(null);
     }
 
-    @Transactional
     @Override
     public Employee saveEmployee(Employee employee) {
-        return employeeDAO.saveEmployee(employee);
+        return employeeRepository.save(employee);
     }
 
-    @Transactional
     @Override
     public void deleteEmployeeById(int employeeId) {
-        employeeDAO.deleteEmployeeById(employeeId);
+        employeeRepository.deleteById(employeeId);
     }
 }

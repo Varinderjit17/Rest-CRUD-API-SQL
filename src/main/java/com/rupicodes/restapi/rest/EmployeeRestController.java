@@ -1,6 +1,5 @@
 package com.rupicodes.restapi.rest;
 
-import com.rupicodes.restapi.dao.EmployeeDAO;
 import com.rupicodes.restapi.entity.Employee;
 import com.rupicodes.restapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,7 @@ public class EmployeeRestController {
     @PutMapping("/employees")
     public Employee updateEmployee(@RequestBody Employee employee) {
         Employee dbEmployee = employeeService.saveEmployee(employee);
+        System.out.println("Put call dbEmployee "+ dbEmployee);
         return dbEmployee;
     }
 
